@@ -64,13 +64,16 @@ public class HomeResourceInterceptor implements HandlerInterceptor {
         List<Category> categoryList = categoryService.listCategory();
         request.setAttribute("allCategoryList", categoryList);
 
-        List<HotKeyword> keywordsList = null;
+        List<HotKeyword> keywordsList = new ArrayList<HotKeyword>();
 
 
         //尝试读取缓存中的热点关键字集合
         if(redisTemplate.boundZSetOps("zSet").size() == 0){
             //缓存中一个也没有则从数据库中读取，注意，这里做了限制，只能读取前20个热度最高的关键词
             keywordsList = hotKeywordService.getAllHotKeywords();
+            for(HotKeyword hotKeyword : keywordsList){
+                redisTemplate.boundZSetOps("zSet").add(hotKeyword.getKeyword(),hotKeyword.getCount());
+            }
             System.out.println("read from mysql");
         }else{
             //否则从缓存中读取热点关键词信息
@@ -79,7 +82,7 @@ public class HomeResourceInterceptor implements HandlerInterceptor {
                     redisTemplate.boundZSetOps("zSet").rangeByScoreWithScores(0,Integer.MAX_VALUE);
             //之后将其封装为一个list，便于将其加入session域中在页面显示
             for(ZSetOperations.TypedTuple tuple : tupleSet){
-                keywordsList.add(new HotKeyword((String)tuple.getValue(),tuple.getScore().intValue()));
+                keywordsList.add(0,new HotKeyword((String)tuple.getValue(),tuple.getScore().intValue()));
             }
         }
 

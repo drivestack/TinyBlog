@@ -111,8 +111,6 @@ public class IndexController {
         // 从数据库中读取时就不读id了，只读关键词keyword及其搜索次数count
 
         //  查找keywords在zSet内的排名
-        //Set<String> keywordList = (Set)redisTemplate.boundZSetOps("zSet").range(0, -1);
-        //System.out.println(keywordList.toString());
         Object exist = redisTemplate.boundZSetOps("zSet").rank(keywords);
         // 缓存中不存在该关键词则创建，并给定初始分值为1
         if(exist == null){
@@ -127,7 +125,7 @@ public class IndexController {
 //        keywordSet.forEach(v -> System.out.printf("%s,",v.toString()));
 //        System.out.printf("\n");
         //清空zSet中所有元素
-        redisTemplate.boundZSetOps("zSet").removeRange(0,-1);
+        //redisTemplate.boundZSetOps("zSet").removeRange(0,-1);
 
         criteria.put("keywords", keywords);
         criteria.put("orderRule", orderRule);
