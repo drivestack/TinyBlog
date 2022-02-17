@@ -16,6 +16,11 @@ public class HotKeyword implements Serializable {
     private String keyword;
 
     private Integer count;
+
+    public HotKeyword(String keyword, Integer count) {
+        this.keyword = keyword;
+        this.count = count;
+    }
 }
 //create table hot_keywords(
 //    hot_keyword_id int not null auto_incement COMMENT '关键词ID',

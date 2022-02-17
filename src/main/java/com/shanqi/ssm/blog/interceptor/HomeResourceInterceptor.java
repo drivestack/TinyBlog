@@ -78,6 +78,9 @@ public class HomeResourceInterceptor implements HandlerInterceptor {
             Set<ZSetOperations.TypedTuple> tupleSet =
                     redisTemplate.boundZSetOps("zSet").rangeByScoreWithScores(0,Integer.MAX_VALUE);
             //之后将其封装为一个list，便于将其加入session域中在页面显示
+            for(ZSetOperations.TypedTuple tuple : tupleSet){
+                keywordsList.add(new HotKeyword((String)tuple.getValue(),tuple.getScore().intValue()));
+            }
         }
 
         request.setAttribute("allHotKeywords", keywordsList);
