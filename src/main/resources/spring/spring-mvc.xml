@@ -46,7 +46,7 @@
     <mvc:resources mapping="/img/**" location="/resource/assets/img/"></mvc:resources>
     <mvc:resources mapping="/plugin/**" location="/resource/assets/plugin/"></mvc:resources>
 
-
+    <!-- 配置拦截器 -->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
@@ -122,6 +122,19 @@
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/admin/link/**"/>
+            <bean class="com.shanqi.ssm.blog.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/notice"/>
+            <bean class="com.shanqi.ssm.blog.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/notice/**"/>
+            <bean class="com.shanqi.ssm.blog.interceptor.AdminInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/admin/notice/edit/**"/>
             <bean class="com.shanqi.ssm.blog.interceptor.AdminInterceptor"/>
         </mvc:interceptor>
 

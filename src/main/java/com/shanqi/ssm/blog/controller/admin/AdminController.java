@@ -70,8 +70,7 @@ public class AdminController {
      * @return
      */
     @RequestMapping("/login")
-    public String
-    loginPage() {
+    public String loginPage() {
         return "Admin/login";
     }
 
@@ -139,7 +138,7 @@ public class AdminController {
     }
 
     /**
-     * 登录验证
+     * 注册提交
      *
      * @param request
      * @return
@@ -174,7 +173,7 @@ public class AdminController {
             userService.insertUser(user);
         } catch (Exception e) {
             e.printStackTrace();
-            return new JsonResult().fail("系统异常");
+            return new JsonResult().fail("系统异常，请稍后再试");
         }
         return new JsonResult().ok("注册成功");
     }
