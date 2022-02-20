@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -69,8 +70,9 @@ public class HomeResourceInterceptor implements HandlerInterceptor {
 
         //尝试读取缓存中的热点关键字集合
         if(redisTemplate.boundZSetOps("zSet").size() == 0){
-            //缓存中一个也没有则从数据库中读取，注意，这里做了限制，只能读取前20个热度最高的关键词
+            // 缓存中一个也没有则从数据库中读取，注意，这里做了限制，只能读取前20个热度最高的关键词
             keywordsList = hotKeywordService.getAllHotKeywords();
+            // 将读取的关键词信息加入到Redis缓存中
             for(HotKeyword hotKeyword : keywordsList){
                 redisTemplate.boundZSetOps("zSet").add(hotKeyword.getKeyword(),hotKeyword.getCount());
             }
@@ -79,10 +81,16 @@ public class HomeResourceInterceptor implements HandlerInterceptor {
             //否则从缓存中读取热点关键词信息
             //这里首先将redis中所有的关键词及其频率先取出，用TypedTuple进行包装
             Set<ZSetOperations.TypedTuple> tupleSet =
-                    redisTemplate.boundZSetOps("zSet").rangeByScoreWithScores(0,Integer.MAX_VALUE);
+                    redisTemplate.boundZSetOps("zSet").reverseRangeWithScores(0,19);
+            /// 测试关键词列表所使用
+//            for(ZSetOperations.TypedTuple tuple : tupleSet){
+//                System.out.println("key="+tuple.getValue()+" , value="+tuple.getScore());
+//            }
             //之后将其封装为一个list，便于将其加入session域中在页面显示
-            for(ZSetOperations.TypedTuple tuple : tupleSet){
-                keywordsList.add(0,new HotKeyword((String)tuple.getValue(),tuple.getScore().intValue()));
+            Iterator<ZSetOperations.TypedTuple> it = tupleSet.iterator();
+            while(it.hasNext()){
+                ZSetOperations.TypedTuple tuple = it.next();
+                keywordsList.add(new HotKeyword((String)tuple.getValue(),tuple.getScore().intValue()));
             }
         }
 

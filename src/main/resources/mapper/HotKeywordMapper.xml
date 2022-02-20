@@ -9,16 +9,16 @@
     <select id="countHotKeyword" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
             count(*)
-        from hot_keywords
+        from hot_keyword
     </select>
 
     <select id="getAllHotKeywords" resultMap="BaseResultMap" parameterType="com.shanqi.ssm.blog.entity.HotKeyword">
         select keyword, count
-        from hot_keywords order by count desc limit 20
+        from hot_keyword order by count desc limit 20
     </select>
 
     <update id="updateHotKeyword" parameterType="com.shanqi.ssm.blog.entity.HotKeyword">
-        update hot_keywords
+        update hot_keyword
         <set>
             <if test="keyword != null">keyword = #{keyword,jdbcType=VARCHAR},</if>
             <if test="count != null">count = #{count,jdbcType=INTEGER},</if>
@@ -27,7 +27,7 @@
     </update>
 
     <delete id="deleteHotKeyword" parameterType="java.lang.Integer" >
-        delete from hot_keywords
+        delete from hot_keyword
         where keyword = #{keyword,jdbcType=VARCHAR}
     </delete>
 

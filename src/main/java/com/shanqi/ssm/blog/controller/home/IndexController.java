@@ -106,11 +106,10 @@ public class IndexController {
         HashMap<String, Object> criteria = new HashMap<>(2);
         criteria.put("status", ArticleStatus.PUBLISH.getValue());
 
-        //使用缓存记录热点关键字
+        // 使用缓存记录热点关键字
         // 首先热词在redis中采用zset进行存储，内部是key:value的形式
-        // 从数据库中读取时就不读id了，只读关键词keyword及其搜索次数count
 
-        //  查找keywords在zSet内的排名
+        // 查找keywords在zSet内的排名
         Object exist = redisTemplate.boundZSetOps("zSet").rank(keywords);
         // 缓存中不存在该关键词则创建，并给定初始分值为1
         if(exist == null){
