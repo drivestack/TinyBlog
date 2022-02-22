@@ -32,8 +32,8 @@
                 sorted by:
                 <select name="orderRule">
                     <option value="null">null</option>
-                    <option value="article_update_time">Newest first</option>
-                    <option value="article_update_time DESC">Oldest first</option>
+                    <option value="article_update_time DESC">Newest first</option>
+                    <option value="article_update_time">Oldest first</option>
                     <option value="article_view_count DESC">Most views</option>
                     <option value="article_comment_count DESC">Most comments</option>
                 </select>
