@@ -61,19 +61,6 @@
                     <div class="single-content">
                             ${article.articleContent}
                     </div>
-                    <div class="s-weixin">
-                        <ul class="weimg1">
-                            <li><strong>微信</strong></li>
-                            <li>赶快加我聊天吧</li>
-                            <li><img src="/img/weixin.jpg"></li>
-                        </ul>
-                        <ul class="weimg2">
-                            <li><strong>博客交流群</strong></li>
-                            <li>海纳百川，大家来水</li>
-                            <li><img src="/img/qqGroup.jpg" alt="weinxin"></li>
-                        </ul>
-                        <div class="clear"></div>
-                    </div>
                     <div class="clear"></div>
                     <div id="social">
                         <div class="social-main">
@@ -85,12 +72,6 @@
                                        id="count-${article.articleId}">${article.articleLikeCount}</i>
                                 </a>
                             </span>
-                            <div class="shang-p">
-                                <div class="shang-empty"><span></span></div>
-                                <span class="shang-s">
-                                    <a onclick="PaymentUtils.show();" style="cursor:pointer">赏</a>
-                                </span>
-                            </div>
                             <div class="share-sd">
                                         <span class="share-s" style="margin-top: 25px!important;">
                                             <a href="javascript:void(0)" id="share-s" title="分享">
